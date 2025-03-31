@@ -24,12 +24,12 @@ public class SentenceProcessor {
 	}
 	
 
-	public static String replaceWord(String Oldword,String Newword,String sentence){
+	public static String replaceWord(String target,String replacement,String sentence){
 		
 		String[] words=sentence.split(" ");
 		String result="";
 		for(int i=0;i<words.length;i++) {
-			result+=(i>0?" ":"")+(words[i].equals(Oldword)?Newword:words[i]);
+			result+=(i>0?" ":"")+(words[i].equals(target)?replacement:words[i]);
 		}
 		 return result;
 		
