@@ -1,5 +1,9 @@
 public class Triangle extends Shape {
 
+    public Triangle(double length) {
+        super(length);
+    }
+
     @Override
     public void setLength(double length) {
         this.length = length;
@@ -7,7 +11,6 @@ public class Triangle extends Shape {
 
     @Override
     public double getArea() {
-        // Regular triangle (equilateral): area = (sqrt(3)/4) * side^2
         return (Math.sqrt(3) / 4) * length * length;
     }
 
@@ -16,3 +19,5 @@ public class Triangle extends Shape {
         return 3 * length;
     }
 }
+
+

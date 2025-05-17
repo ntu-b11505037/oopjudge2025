@@ -1,5 +1,9 @@
 public class Square extends Shape {
 
+    public Square(double length) {
+        super(length);
+    }
+
     @Override
     public void setLength(double length) {
         this.length = length;

@@ -1,5 +1,9 @@
 public class Circle extends Shape {
 
+    public Circle(double length) {
+        super(length);
+    }
+
     @Override
     public void setLength(double length) {
         this.length = length;
@@ -13,7 +17,6 @@ public class Circle extends Shape {
 
     @Override
     public double getPerimeter() {
-        // circumference = π * diameter
         return Math.PI * length;
     }
 }

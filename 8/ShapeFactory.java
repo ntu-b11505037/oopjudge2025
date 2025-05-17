@@ -5,21 +5,15 @@ public class ShapeFactory {
     }
 
     public Shape createShape(Type shapeType, double length) {
-        Shape shape;
         switch (shapeType) {
             case Triangle:
-                shape = new Triangle();
-                break;
+                return new Triangle(length);
             case Square:
-                shape = new Square();
-                break;
+                return new Square(length);
             case Circle:
-                shape = new Circle();
-                break;
+                return new Circle(length);
             default:
                 throw new IllegalArgumentException("Unknown shape type");
         }
-        shape.setLength(length);
-        return shape;
     }
 }
