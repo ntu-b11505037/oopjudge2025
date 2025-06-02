@@ -1,5 +1,5 @@
 public class UnknownCmdException extends Exception {
-    public UnknownCmdException(String errMessage) {
-        super(errMessage);
-    }
+        public UnknownCmdException(String message) {
+                super(message);
+        }
 }

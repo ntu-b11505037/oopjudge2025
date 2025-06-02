@@ -1,83 +1,107 @@
-import java.text.DecimalFormat;
-
 public class SimpleCalculator {
-    private double result = 0.0;
-    private int calcCount = 0;
-    private String lastOperator = "";
-    private double lastValue = 0.0;
+        private char operator;
+        private double operand;
 
-    DecimalFormat df = new DecimalFormat("0.00");
+	private double result;
+        private int cal_count;
 
-    public void calResult(String cmd) throws UnknownCmdException {
-        // Trim command
-        cmd = cmd.trim();
+        private boolean is_cal_ended;
 
-        // Check form
-        String[] parts = cmd.split(" ");
-        if (parts.length != 2) {
-            throw new UnknownCmdException("Please enter 1 operator and 1 value separated by 1 space");
+        public SimpleCalculator() {
+                this.result = 0.0;
+                this.cal_count = 0;
+
+                this.is_cal_ended = false;
         }
 
-        String operator = parts[0];
-        String valueStr = parts[1];
-        boolean validOp = operator.equals("+") || operator.equals("-") || operator.equals("*") || operator.equals("/");
-        boolean validValue = true;
-        double value = 0.0;
+	public void calResult(String cmd) throws UnknownCmdException {
+                String[] operator_operand;
 
-        try {
-            value = Double.parseDouble(valueStr);
-        } catch (NumberFormatException e) {
-            validValue = false;
-        }
+                boolean is_operand_invalid;
 
-        if (!validOp && !validValue) {
-            throw new UnknownCmdException(operator + " is an unknown operator and " + valueStr + " is an unknown value");
-        } else if (!validOp) {
-            throw new UnknownCmdException(operator + " is an unknown operator");
-        } else if (!validValue) {
-            throw new UnknownCmdException(valueStr + " is an unknown value");
-        }
+                operator_operand = cmd.split(" ");
 
-        if (operator.equals("/") && value == 0.0) {
-            throw new UnknownCmdException("Can not divide by 0");
-        }
+                is_operand_invalid = false;
+                try {
+                        operand = Double.parseDouble(operator_operand[1]);
+                } catch (NumberFormatException e) {
+                        is_operand_invalid = true;
+                }
+                operator = operator_operand[0].charAt(0);
 
-        // Store last valid command for getMsg()
-        lastOperator = operator;
-        lastValue = value;
+                if (!(operator == '+' || operator == '-' || operator == '*' || operator == '/')) {
+                        if (is_operand_invalid) {
+                                throw new UnknownCmdException(
+                                        "" + operator + " is an unknown operator and " +
+                                        operator_operand[1] + " is an unknown value");
+                        } else {
+                                throw new UnknownCmdException(
+                                        operator + " is an unknown operator");
+                        }
+                } else {
+                        if (is_operand_invalid) {
+                                throw new UnknownCmdException(
+                                        operator_operand[1] + " is an unknown value");
+                        }
+                }
 
-        // Perform operation
-        switch (operator) {
-            case "+":
-                result += value;
-                break;
-            case "-":
-                result -= value;
-                break;
-            case "*":
-                result *= value;
-                break;
-            case "/":
-                result /= value;
-                break;
-        }
+                switch (operator) {
+                case '+':
+                        result += operand;
+                        break;
+                case '-':
+                        result -= operand;
+                        break;
+                case '*':
+                        result *= operand;
+                        break;
+                case '/':
+                        result /= operand;
+                        break;
+                }
+                ++cal_count;
+	}
 
-        calcCount++;
-    }
+	public String getMsg() {
+                String result_fmt;
+                int result_fmt_len;
+                int i;
+                int index, count;
 
-    public String getMsg() {
-        if (calcCount == 0) {
-            return "Calculator is on. Result = " + df.format(result);
-        } else if (calcCount == 1) {
-            return "Result " + lastOperator + " " + df.format(lastValue) + " = " + df.format(result) +
-                   ". New result = " + df.format(result);
-        } else {
-            return "Result " + lastOperator + " " + df.format(lastValue) + " = " + df.format(result) +
-                   ". Updated result = " + df.format(result);
-        }
-    }
+                result_fmt = String.format("%.2f", result);
+                result_fmt_len = result_fmt.length();
+                count = 0;
+                if ((index = result_fmt.indexOf(".")) != -1) {
+                        for (i = result_fmt_len - 1;
+                             i >= index && result_fmt.charAt(i) == '0';
+                             --i, ++count)
+                                ;
+                        if (count > 0)
+                                result_fmt = result_fmt.substring(0, result_fmt_len - count + 1);
+                }
 
-    public boolean endCalc(String cmd) {
-        return cmd.equalsIgnoreCase("r");
-    }
+                if (is_cal_ended)
+                        return ("Final result = " + result_fmt);
+
+                if (cal_count == 0)
+                        return ("Calculator is on. Result = " + result_fmt);
+                else if (cal_count == 1)
+                        return ("Result " + operator + " " + operand + " = " + result_fmt + ". " +
+                                "New result = " + result_fmt);
+                else
+                        return ("Result " + operator + " " + operand + " = " + result_fmt + ". " +
+                                "Updated result = " + result_fmt);
+	}
+
+	public boolean endCalc(String cmd) {
+                char tmp_c;
+
+                tmp_c = cmd.charAt(0);
+                if (tmp_c == 'R' || tmp_c == 'r') {
+                        is_cal_ended = true;
+                        return true;
+                } else {
+                        return false;
+                }
+	}
 }
