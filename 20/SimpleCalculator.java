@@ -1,107 +1,115 @@
+import java.text.DecimalFormat;
+
+/**
+ * A simple calculator that maintains a running result starting from 0.00.
+ * Supports basic arithmetic operations: addition, subtraction, multiplication, and division.
+ * Handles command validation and formats result to 2 decimal places.
+ */
 public class SimpleCalculator {
-        private char operator;
-        private double operand;
 
-	private double result;
-        private int cal_count;
+    /** Stores the current result of calculations (not rounded). */
+    private double result = 0.0;
 
-        private boolean is_cal_ended;
+    /** Counts how many successful calculations have been performed. */
+    private int calcCount = 0;
 
-        public SimpleCalculator() {
-                this.result = 0.0;
-                this.cal_count = 0;
+    /** The most recent valid operator used. */
+    private String lastOperator = "";
 
-                this.is_cal_ended = false;
+    /** The most recent valid value used in an operation. */
+    private double lastValue = 0.0;
+
+    /** Formatter for rounding numbers to 2 decimal places in output. */
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    /**
+     * Parses and executes a single calculator command.
+     * 
+     * @param cmd the command string in the form "operator value" (e.g., "+ 5")
+     * @throws UnknownCmdException if the command format is invalid or causes an error
+     */
+    public void calResult(String cmd) throws UnknownCmdException {
+        if (cmd == null || cmd.trim().isEmpty()) {
+            throw new UnknownCmdException("Please enter 1 operator and 1 value separated by 1 space");
         }
 
-	public void calResult(String cmd) throws UnknownCmdException {
-                String[] operator_operand;
+        String[] parts = cmd.trim().split(" ");
+        if (parts.length != 2) {
+            throw new UnknownCmdException("Please enter 1 operator and 1 value separated by 1 space");
+        }
 
-                boolean is_operand_invalid;
+        String operator = parts[0];
+        String valueStr = parts[1];
 
-                operator_operand = cmd.split(" ");
+        boolean validOp = operator.equals("+") || operator.equals("-") || operator.equals("*") || operator.equals("/");
+        boolean validValue = true;
+        double value = 0.0;
 
-                is_operand_invalid = false;
-                try {
-                        operand = Double.parseDouble(operator_operand[1]);
-                } catch (NumberFormatException e) {
-                        is_operand_invalid = true;
-                }
-                operator = operator_operand[0].charAt(0);
+        try {
+            value = Double.parseDouble(valueStr);
+        } catch (NumberFormatException e) {
+            validValue = false;
+        }
 
-                if (!(operator == '+' || operator == '-' || operator == '*' || operator == '/')) {
-                        if (is_operand_invalid) {
-                                throw new UnknownCmdException(
-                                        "" + operator + " is an unknown operator and " +
-                                        operator_operand[1] + " is an unknown value");
-                        } else {
-                                throw new UnknownCmdException(
-                                        operator + " is an unknown operator");
-                        }
-                } else {
-                        if (is_operand_invalid) {
-                                throw new UnknownCmdException(
-                                        operator_operand[1] + " is an unknown value");
-                        }
-                }
+        // Exception logic
+        if (!validOp && !validValue) {
+            throw new UnknownCmdException(operator + " is an unknown operator and " + valueStr + " is an unknown value");
+        } else if (!validOp) {
+            throw new UnknownCmdException(operator + " is an unknown operator");
+        } else if (!validValue) {
+            throw new UnknownCmdException(valueStr + " is an unknown value");
+        }
 
-                switch (operator) {
-                case '+':
-                        result += operand;
-                        break;
-                case '-':
-                        result -= operand;
-                        break;
-                case '*':
-                        result *= operand;
-                        break;
-                case '/':
-                        result /= operand;
-                        break;
-                }
-                ++cal_count;
-	}
+        if (operator.equals("/") && value == 0.0) {
+            throw new UnknownCmdException("Can not divide by 0");
+        }
 
-	public String getMsg() {
-                String result_fmt;
-                int result_fmt_len;
-                int i;
-                int index, count;
+        // Apply the operation
+        switch (operator) {
+            case "+":
+                result += value;
+                break;
+            case "-":
+                result -= value;
+                break;
+            case "*":
+                result *= value;
+                break;
+            case "/":
+                result /= value;
+                break;
+        }
 
-                result_fmt = String.format("%.2f", result);
-                result_fmt_len = result_fmt.length();
-                count = 0;
-                if ((index = result_fmt.indexOf(".")) != -1) {
-                        for (i = result_fmt_len - 1;
-                             i >= index && result_fmt.charAt(i) == '0';
-                             --i, ++count)
-                                ;
-                        if (count > 0)
-                                result_fmt = result_fmt.substring(0, result_fmt_len - count + 1);
-                }
+        // Store last successful command info
+        lastOperator = operator;
+        lastValue = value;
+        calcCount++;
+    }
 
-                if (is_cal_ended)
-                        return ("Final result = " + result_fmt);
+    /**
+     * Returns a formatted message describing the current state or the result of the last operation.
+     *
+     * @return a message corresponding to the calculator state or last result
+     */
+    public String getMsg() {
+        if (calcCount == 0) {
+            return "Calculator is on. Result = " + df.format(result);
+        } else if (calcCount == 1) {
+            return "Result " + lastOperator + " " + df.format(lastValue) + " = " +
+                   df.format(result) + ". New result = " + df.format(result);
+        } else {
+            return "Result " + lastOperator + " " + df.format(lastValue) + " = " +
+                   df.format(result) + ". Updated result = " + df.format(result);
+        }
+    }
 
-                if (cal_count == 0)
-                        return ("Calculator is on. Result = " + result_fmt);
-                else if (cal_count == 1)
-                        return ("Result " + operator + " " + operand + " = " + result_fmt + ". " +
-                                "New result = " + result_fmt);
-                else
-                        return ("Result " + operator + " " + operand + " = " + result_fmt + ". " +
-                                "Updated result = " + result_fmt);
-	}
-
-	public boolean endCalc(String cmd) {
-                char tmp_c;
-
-                tmp_c = cmd.charAt(0);
-                if (tmp_c == 'R' || tmp_c == 'r') {
-                        is_cal_ended = true;
-                        return true;
-                } else {
-                        return false;
-                }
-	}
+    /**
+     * Determines whether the calculator should end based on the command.
+     *
+     * @param cmd the input command
+     * @return true if command is "r" or "R", false otherwise
+     */
+    public boolean endCalc(String cmd) {
+        return cmd != null && cmd.trim().equalsIgnoreCase("r");
+    }
 }
