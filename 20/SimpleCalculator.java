@@ -1,8 +1,7 @@
 import java.text.DecimalFormat;
 
 /**
- * A simple calculator that processes string commands with arithmetic operations.
- * It maintains a single result value and provides detailed error handling.
+ * A simple calculator that performs basic arithmetic operations based on user input commands.
  */
 public class SimpleCalculator {
 
@@ -10,13 +9,14 @@ public class SimpleCalculator {
     private int calcCount = 0;
     private String lastOperator = "";
     private double lastValue = 0.0;
+    private boolean ended = false;  // Flag to indicate if calculation has ended
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     /**
-     * Performs a calculation based on the input command string.
+     * Parses and calculates the result from the given command.
      * 
-     * @param cmd the command string in the format: operator value (e.g., "+ 5")
-     * @throws UnknownCmdException if the command format or values are invalid
+     * @param cmd the command string (e.g., "+ 5")
+     * @throws UnknownCmdException if command format or contents are invalid
      */
     public void calResult(String cmd) throws UnknownCmdException {
         if (cmd == null || cmd.trim().isEmpty()) {
@@ -52,6 +52,7 @@ public class SimpleCalculator {
             throw new UnknownCmdException("Can not divide by 0");
         }
 
+        // Perform the calculation
         switch (op) {
             case "+":
                 result += val;
@@ -73,11 +74,14 @@ public class SimpleCalculator {
     }
 
     /**
-     * Returns a formatted message after each command based on the calculation count.
+     * Returns a message reflecting the current or final result.
      * 
-     * @return a user-friendly message showing the result state
+     * @return a formatted message depending on calculator state
      */
     public String getMsg() {
+        if (ended) {
+            return "Final result = " + df.format(result);
+        }
         if (calcCount == 0) {
             return "Calculator is on. Result = " + df.format(result);
         } else if (calcCount == 1) {
@@ -90,23 +94,17 @@ public class SimpleCalculator {
     }
 
     /**
-     * Determines whether the command indicates the end of calculation.
+     * Checks if the command ends the calculation.
      * 
-     * @param cmd the user input command
-     * @return true if cmd is "r" or "R", false otherwise
+     * @param cmd the input command
+     * @return true if cmd is "r" or "R", otherwise false
      */
     public boolean endCalc(String cmd) {
-        return cmd != null && cmd.trim().equalsIgnoreCase("r");
-    }
-
-    /**
-     * Returns the final result rounded to 2 decimal places.
-     * Used for displaying final output.
-     *
-     * @return final result string
-     */
-    public String getFinalResult() {
-        return "Final result = " + df.format(result);
+        if (cmd != null && cmd.trim().equalsIgnoreCase("r")) {
+            ended = true;  // mark as finished to affect getMsg()
+            return true;
+        }
+        return false;
     }
 }
 
