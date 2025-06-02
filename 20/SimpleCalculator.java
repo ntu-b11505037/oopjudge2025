@@ -1,32 +1,22 @@
 import java.text.DecimalFormat;
 
 /**
- * A simple calculator that maintains a running result starting from 0.00.
- * Supports basic arithmetic operations: addition, subtraction, multiplication, and division.
- * Handles command validation and formats result to 2 decimal places.
+ * A simple calculator that processes string commands with arithmetic operations.
+ * It maintains a single result value and provides detailed error handling.
  */
 public class SimpleCalculator {
 
-    /** Stores the current result of calculations (not rounded). */
     private double result = 0.0;
-
-    /** Counts how many successful calculations have been performed. */
     private int calcCount = 0;
-
-    /** The most recent valid operator used. */
     private String lastOperator = "";
-
-    /** The most recent valid value used in an operation. */
     private double lastValue = 0.0;
-
-    /** Formatter for rounding numbers to 2 decimal places in output. */
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     /**
-     * Parses and executes a single calculator command.
+     * Performs a calculation based on the input command string.
      * 
-     * @param cmd the command string in the form "operator value" (e.g., "+ 5")
-     * @throws UnknownCmdException if the command format is invalid or causes an error
+     * @param cmd the command string in the format: operator value (e.g., "+ 5")
+     * @throws UnknownCmdException if the command format or values are invalid
      */
     public void calResult(String cmd) throws UnknownCmdException {
         if (cmd == null || cmd.trim().isEmpty()) {
@@ -38,58 +28,54 @@ public class SimpleCalculator {
             throw new UnknownCmdException("Please enter 1 operator and 1 value separated by 1 space");
         }
 
-        String operator = parts[0];
-        String valueStr = parts[1];
-
-        boolean validOp = operator.equals("+") || operator.equals("-") || operator.equals("*") || operator.equals("/");
-        boolean validValue = true;
-        double value = 0.0;
+        String op = parts[0];
+        String valStr = parts[1];
+        boolean validOp = op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/");
+        boolean validVal = true;
+        double val = 0.0;
 
         try {
-            value = Double.parseDouble(valueStr);
+            val = Double.parseDouble(valStr);
         } catch (NumberFormatException e) {
-            validValue = false;
+            validVal = false;
         }
 
-        // Exception logic
-        if (!validOp && !validValue) {
-            throw new UnknownCmdException(operator + " is an unknown operator and " + valueStr + " is an unknown value");
+        if (!validOp && !validVal) {
+            throw new UnknownCmdException(op + " is an unknown operator and " + valStr + " is an unknown value");
         } else if (!validOp) {
-            throw new UnknownCmdException(operator + " is an unknown operator");
-        } else if (!validValue) {
-            throw new UnknownCmdException(valueStr + " is an unknown value");
+            throw new UnknownCmdException(op + " is an unknown operator");
+        } else if (!validVal) {
+            throw new UnknownCmdException(valStr + " is an unknown value");
         }
 
-        if (operator.equals("/") && value == 0.0) {
+        if (op.equals("/") && val == 0.0) {
             throw new UnknownCmdException("Can not divide by 0");
         }
 
-        // Apply the operation
-        switch (operator) {
+        switch (op) {
             case "+":
-                result += value;
+                result += val;
                 break;
             case "-":
-                result -= value;
+                result -= val;
                 break;
             case "*":
-                result *= value;
+                result *= val;
                 break;
             case "/":
-                result /= value;
+                result /= val;
                 break;
         }
 
-        // Store last successful command info
-        lastOperator = operator;
-        lastValue = value;
+        lastOperator = op;
+        lastValue = val;
         calcCount++;
     }
 
     /**
-     * Returns a formatted message describing the current state or the result of the last operation.
-     *
-     * @return a message corresponding to the calculator state or last result
+     * Returns a formatted message after each command based on the calculation count.
+     * 
+     * @return a user-friendly message showing the result state
      */
     public String getMsg() {
         if (calcCount == 0) {
@@ -104,12 +90,23 @@ public class SimpleCalculator {
     }
 
     /**
-     * Determines whether the calculator should end based on the command.
-     *
-     * @param cmd the input command
-     * @return true if command is "r" or "R", false otherwise
+     * Determines whether the command indicates the end of calculation.
+     * 
+     * @param cmd the user input command
+     * @return true if cmd is "r" or "R", false otherwise
      */
     public boolean endCalc(String cmd) {
         return cmd != null && cmd.trim().equalsIgnoreCase("r");
     }
+
+    /**
+     * Returns the final result rounded to 2 decimal places.
+     * Used for displaying final output.
+     *
+     * @return final result string
+     */
+    public String getFinalResult() {
+        return "Final result = " + df.format(result);
+    }
 }
+
