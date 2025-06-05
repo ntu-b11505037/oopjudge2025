@@ -1,5 +1,14 @@
-
+/**
+ * SentenceProcessor provides utilities to manipulate words in a sentence.
+ */
 public class SentenceProcessor {
+
+    /**
+     * Removes duplicated words from a sentence, preserving the first occurrence.
+     *
+     * @param sentence The input sentence.
+     * @return A new sentence with duplicates removed.
+     */
     public static String removeDuplicatedWords(String sentence) {
         String[] words = sentence.trim().split("\\s+");
         StringBuilder result = new StringBuilder();
@@ -20,7 +29,15 @@ public class SentenceProcessor {
         return result.toString();
     }
 
-    public static String replaceWord(String oldWord, String newWord,String sentence) {
+    /**
+     * Replaces all occurrences of a specific word in a sentence with another word.
+     *
+     * @param oldWord The word to be replaced.
+     * @param newWord The word to replace with.
+     * @param sentence The input sentence.
+     * @return The modified sentence with replacements made.
+     */
+    public static String replaceWord(String oldWord, String newWord, String sentence) {
         String[] words = sentence.trim().split("\\s+");
         StringBuilder result = new StringBuilder();
 
@@ -30,5 +47,5 @@ public class SentenceProcessor {
         }
         return result.toString();
     }
-
 }
+

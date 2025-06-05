@@ -1,14 +1,24 @@
+/**
+ * SimpleArrayList is a custom implementation of a dynamic array that holds Integer elements.
+ * It supports operations like add, get, set, remove, clear, retainAll, and size.
+ */
 public class SimpleArrayList {
     private Integer[] data;
     private int size; // number of valid elements
 
-    // 1. Default constructor
+    /**
+     * Constructs an empty SimpleArrayList.
+     */
     public SimpleArrayList() {
         data = new Integer[0];
         size = 0;
     }
 
-    // 2. Constructor with initial size
+    /**
+     * Constructs a SimpleArrayList with a specified initial size, initialized with zeros.
+     * 
+     * @param initialSize the number of elements to initialize
+     */
     public SimpleArrayList(int initialSize) {
         data = new Integer[initialSize];
         for (int i = 0; i < initialSize; i++) {
@@ -17,7 +27,11 @@ public class SimpleArrayList {
         size = initialSize;
     }
 
-    // 3. Add element
+    /**
+     * Adds a new element to the end of the list.
+     * 
+     * @param i the Integer element to add
+     */
     public void add(Integer i) {
         Integer[] newData = new Integer[size + 1];
         for (int j = 0; j < size; j++) {
@@ -28,7 +42,12 @@ public class SimpleArrayList {
         size++;
     }
 
-    // 4. Get element
+    /**
+     * Retrieves the element at the specified index.
+     * 
+     * @param index the index of the element
+     * @return the Integer element or null if index is invalid
+     */
     public Integer get(int index) {
         if (index >= 0 && index < size) {
             return data[index];
@@ -36,7 +55,13 @@ public class SimpleArrayList {
         return null;
     }
 
-    // 5. Set element
+    /**
+     * Replaces the element at the specified index with a new element.
+     * 
+     * @param index the index to replace
+     * @param element the new element
+     * @return the old element or null if index is invalid
+     */
     public Integer set(int index, Integer element) {
         if (index >= 0 && index < size) {
             Integer old = data[index];
@@ -46,7 +71,12 @@ public class SimpleArrayList {
         return null;
     }
 
-    // 6. Remove element
+    /**
+     * Removes the element at the specified index.
+     * 
+     * @param index the index to remove
+     * @return true if removal is successful, false otherwise
+     */
     public boolean remove(int index) {
         if (index < 0 || index >= size || data[index] == null) {
             return false;
@@ -62,18 +92,29 @@ public class SimpleArrayList {
         return true;
     }
 
-    // 7. Clear array
+    /**
+     * Clears all elements from the list.
+     */
     public void clear() {
         data = new Integer[0];
         size = 0;
     }
 
-    // 8. Get size
+    /**
+     * Returns the number of valid elements in the list.
+     * 
+     * @return the size of the list
+     */
     public int size() {
         return size;
     }
 
-    // 9. Retain all elements that are also in l
+    /**
+     * Retains only the elements in this list that are contained in the specified list.
+     * 
+     * @param l the list whose elements should be retained
+     * @return true if any elements were removed, false otherwise
+     */
     public boolean retainAll(SimpleArrayList l) {
         boolean changed = false;
         int newSize = 0;
@@ -98,7 +139,13 @@ public class SimpleArrayList {
         return changed;
     }
 
-    // Helper method: check if list l contains element
+    /**
+     * Helper method to check if the list contains a specific element.
+     * 
+     * @param l the list to check in
+     * @param element the element to find
+     * @return true if the element exists in the list, false otherwise
+     */
     private boolean contains(SimpleArrayList l, Integer element) {
         for (int i = 0; i < l.size(); i++) {
             if (element == null && l.get(i) == null) {
@@ -110,4 +157,4 @@ public class SimpleArrayList {
         }
         return false;
     }
-}
+} 
