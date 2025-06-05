@@ -1,22 +1,13 @@
 /**
- * The {@code IsLeapYear} class provides a method to determine
- * whether a given year is a leap year according to the rules
- * of the Gregorian calendar.
- *
- * <p>A year is a leap year if it is:
- * <ul>
- *   <li>Divisible by 400, or</li>
- *   <li>Divisible by 4 but not divisible by 100.</li>
- * </ul>
+ * IsLeapYear provides a method to determine whether a given year is a leap year.
  */
 public class IsLeapYear {
 
     /**
-     * Determines whether the specified year is a leap year.
+     * Determines if the specified year is a leap year.
      *
-     * @param a the year to be tested (e.g., 2024)
-     * @return {@code true} if the year is a leap year;
-     *         {@code false} otherwise
+     * @param a The year to evaluate.
+     * @return true if the year is a leap year; false otherwise.
      */
     public static boolean determine(int a) {
         if (a % 400 == 0) {
@@ -28,3 +19,4 @@ public class IsLeapYear {
         }
     }
 }
+

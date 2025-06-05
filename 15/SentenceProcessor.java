@@ -1,17 +1,13 @@
 /**
- * The {@code SentenceProcessor} class provides utility methods for processing sentences,
- * including removing duplicated words and replacing specific words within the sentence.
+ * SentenceProcessor provides utilities to manipulate words in a sentence.
  */
 public class SentenceProcessor {
 
     /**
-     * Removes duplicated words from the given sentence.
-     * <p>
-     * Words are considered duplicated if they appear more than once,
-     * and only the first occurrence is kept. Word comparison is case-sensitive.
+     * Removes duplicated words from a sentence, preserving the first occurrence.
      *
-     * @param sentence the input sentence to process
-     * @return a sentence with duplicated words removed, preserving the original word order
+     * @param sentence The input sentence.
+     * @return A new sentence with duplicates removed.
      */
     public static String removeDuplicatedWords(String sentence) {
         String[] words = sentence.trim().split("\\s+");
@@ -34,14 +30,12 @@ public class SentenceProcessor {
     }
 
     /**
-     * Replaces all occurrences of a specific word in a sentence with a new word.
-     * <p>
-     * The comparison is case-sensitive. Only exact matches will be replaced.
+     * Replaces all occurrences of a specific word in a sentence with another word.
      *
-     * @param oldWord  the word to be replaced
-     * @param newWord  the word to replace with
-     * @param sentence the sentence in which the word replacement will occur
-     * @return the sentence after performing the word replacements
+     * @param oldWord The word to be replaced.
+     * @param newWord The word to replace with.
+     * @param sentence The input sentence.
+     * @return The modified sentence with replacements made.
      */
     public static String replaceWord(String oldWord, String newWord, String sentence) {
         String[] words = sentence.trim().split("\\s+");
@@ -54,3 +48,4 @@ public class SentenceProcessor {
         return result.toString();
     }
 }
+

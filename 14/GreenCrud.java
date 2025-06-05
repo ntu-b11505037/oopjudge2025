@@ -1,24 +1,14 @@
 /**
- * The {@code GreenCrud} class provides a method to calculate the growth of a green crud population
- * over a given number of days. The growth follows a pattern similar to the Fibonacci sequence,
- * where the population increases every 5 days.
- *
- * <p>This model assumes:
- * <ul>
- *   <li>Initial population is provided as input.</li>
- *   <li>Population grows based on the sum of the previous two growth values every 5 days.</li>
- * </ul>
+ * GreenCrud simulates population growth using a Fibonacci-like sequence every 5 days.
  */
 public class GreenCrud {
 
     /**
-     * Calculates the green crud population after a specified number of days.
+     * Calculates the population of green crud after a given number of days.
      *
-     * <p>Population increases every 5 days based on a Fibonacci-like sequence.
-     *
-     * @param initialSize the initial size of the green crud population
-     * @param days the number of days to simulate
-     * @return the population size at the end of the given number of days
+     * @param initialSize The initial population size.
+     * @param days The number of days passed.
+     * @return The population size after the specified number of days.
      */
     public static int calPopulation(int initialSize, int days) {
         int a = initialSize;
@@ -34,4 +24,3 @@ public class GreenCrud {
         return b;
     }
 }
-

@@ -1,23 +1,22 @@
 /**
- * The {@code Square} class represents a square shape.
- * It extends the {@code Shape} class and implements methods
- * to calculate area and perimeter based on the length of a side.
+ * Square is a concrete subclass of Shape representing a square shape.
+ * It provides implementations to set the side length, calculate area, and perimeter.
  */
 public class Square extends Shape {
 
     /**
-     * Constructs a {@code Square} with the specified side length.
+     * Constructs a Square with the specified side length.
      *
-     * @param length the length of a side of the square
+     * @param length The length of a side of the square
      */
     public Square(double length) {
         super(length);
     }
 
     /**
-     * Sets the length of the square's side.
+     * Sets the side length of the square.
      *
-     * @param length the new side length
+     * @param length The new side length
      */
     @Override
     public void setLength(double length) {
@@ -25,10 +24,10 @@ public class Square extends Shape {
     }
 
     /**
-     * Rounds a double value to two decimal places.
+     * Helper method to round a value to 2 decimal places.
      *
-     * @param value the number to round
-     * @return the rounded value
+     * @param value The value to round
+     * @return The rounded value with 2 decimal places
      */
     private double round2(double value) {
         return Math.round(value * 100.0) / 100.0;
@@ -36,9 +35,8 @@ public class Square extends Shape {
 
     /**
      * Calculates and returns the area of the square.
-     * Formula: side length squared.
      *
-     * @return the area of the square, rounded to two decimal places
+     * @return The area rounded to 2 decimal places
      */
     @Override
     public double getArea() {
@@ -47,9 +45,8 @@ public class Square extends Shape {
 
     /**
      * Calculates and returns the perimeter of the square.
-     * Formula: 4 times the side length.
      *
-     * @return the perimeter of the square, rounded to two decimal places
+     * @return The perimeter rounded to 2 decimal places
      */
     @Override
     public double getPerimeter() {

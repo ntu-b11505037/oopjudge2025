@@ -1,50 +1,49 @@
 /**
- * The {@code Shape} abstract class serves as a base class for all shape types.
- * It defines the common structure for storing a dimension (length) and
- * provides abstract methods that subclasses must implement for calculating
- * area and perimeter.
+ * Shape is an abstract base class that defines a common interface for geometric shapes.
+ * Each shape has a length property (e.g., side length, diameter, etc.), and must provide
+ * implementations for calculating area and perimeter.
  */
 public abstract class Shape {
-    
+
     /**
-     * The primary dimension of the shape (e.g., diameter for a circle, side length for a square).
+     * Represents the primary dimension of the shape, such as side length or diameter.
      */
     protected double length;	
 
     /**
-     * Constructs a shape with the specified dimension.
-     *
-     * @param length the initial dimension (length) of the shape
+     * Constructs a Shape with the specified length.
+     * 
+     * @param length The dimension to initialize the shape with
      */
     public Shape(double length) {
         this.length = length;
     }
 
     /**
-     * Sets the length (dimension) of the shape.
-     *
-     * @param length the new dimension for the shape
+     * Sets the length for this shape.
+     * 
+     * @param length The new length value
      */
     public abstract void setLength(double length);
 
     /**
-     * Calculates and returns the area of the shape.
-     *
-     * @return the area of the shape
+     * Returns the area of the shape.
+     * 
+     * @return The calculated area
      */
     public abstract double getArea();
 
     /**
-     * Calculates and returns the perimeter of the shape.
-     *
-     * @return the perimeter of the shape
+     * Returns the perimeter of the shape.
+     * 
+     * @return The calculated perimeter
      */
     public abstract double getPerimeter();
 
     /**
-     * Returns a formatted string containing the area and perimeter of the shape.
-     *
-     * @return a string describing the shape's area and perimeter
+     * Returns formatted information including area and perimeter of the shape.
+     * 
+     * @return A string describing the area and perimeter
      */
     public String getInfo() {
         return "Area = " + getArea() +

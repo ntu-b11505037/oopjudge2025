@@ -1,14 +1,13 @@
 /**
- * The {@code Circle} class represents a circle shape.
- * It extends the abstract {@code Shape} class and provides
- * implementations for calculating area and perimeter based on diameter.
+ * Circle is a concrete subclass of Shape representing a circle.
+ * It provides implementations to set the diameter, calculate area, and perimeter.
  */
 public class Circle extends Shape {
 
     /**
-     * Constructs a {@code Circle} with the specified diameter.
+     * Constructs a Circle with the specified diameter.
      *
-     * @param length the diameter of the circle
+     * @param length The diameter of the circle
      */
     public Circle(double length) {
         super(length);
@@ -17,7 +16,7 @@ public class Circle extends Shape {
     /**
      * Sets the diameter of the circle.
      *
-     * @param length the new diameter of the circle
+     * @param length The new diameter length
      */
     @Override
     public void setLength(double length) {
@@ -25,10 +24,10 @@ public class Circle extends Shape {
     }
 
     /**
-     * Rounds a value to two decimal places.
+     * Helper method to round a value to 2 decimal places.
      *
-     * @param value the number to round
-     * @return the rounded number
+     * @param value The value to round
+     * @return The rounded value with 2 decimal places
      */
     private double round2(double value) {
         return Math.round(value * 100.0) / 100.0;
@@ -36,9 +35,8 @@ public class Circle extends Shape {
 
     /**
      * Calculates and returns the area of the circle.
-     * Formula: π * r², where r is half of the diameter.
      *
-     * @return the area of the circle, rounded to 2 decimal places
+     * @return The area rounded to 2 decimal places
      */
     @Override
     public double getArea() {
@@ -48,9 +46,8 @@ public class Circle extends Shape {
 
     /**
      * Calculates and returns the perimeter (circumference) of the circle.
-     * Formula: π * diameter
      *
-     * @return the perimeter of the circle, rounded to 2 decimal places
+     * @return The perimeter rounded to 2 decimal places
      */
     @Override
     public double getPerimeter() {

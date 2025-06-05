@@ -1,18 +1,24 @@
 /**
- * The {@code PizzaOrder} class models an order of up to three pizzas.
- * It provides methods to set the number of pizzas, assign individual pizzas,
- * and calculate the total cost of the order.
+ * The PizzaOrder class represents an order that can consist of up to three pizzas.
+ * It allows setting the number of pizzas and assigning each individual pizza.
+ * It also provides functionality to calculate the total cost of the order.
  */
 public class PizzaOrder {
 
-    // Instance variables
+    /** The number of pizzas in the order (must be between 1 and 3) */
     private int numberPizzas;
+
+    /** The first pizza in the order */
     private Pizza pizza1;
+
+    /** The second pizza in the order */
     private Pizza pizza2;
+
+    /** The third pizza in the order */
     private Pizza pizza3;
 
     /**
-     * Default constructor that initializes an empty pizza order.
+     * Constructs an empty PizzaOrder with no pizzas.
      */
     public PizzaOrder() {
         this.numberPizzas = 0;
@@ -23,10 +29,9 @@ public class PizzaOrder {
 
     /**
      * Sets the number of pizzas in the order.
-     *
-     * @param numberPizzas the number of pizzas (must be between 1 and 3)
-     * @return {@code true} if the number is valid and set successfully;
-     *         {@code false} otherwise
+     * 
+     * @param numberPizzas the number of pizzas (must be 1, 2, or 3)
+     * @return true if the number of pizzas is valid and set; false otherwise
      */
     public boolean setNumberPizzas(int numberPizzas) {
         if (numberPizzas >= 1 && numberPizzas <= 3) {
@@ -39,8 +44,8 @@ public class PizzaOrder {
 
     /**
      * Sets the first pizza in the order.
-     *
-     * @param pizza1 the {@code Pizza} object to assign as the first pizza
+     * 
+     * @param pizza1 the first Pizza object
      */
     public void setPizza1(Pizza pizza1) {
         this.pizza1 = pizza1;
@@ -48,8 +53,8 @@ public class PizzaOrder {
 
     /**
      * Sets the second pizza in the order.
-     *
-     * @param pizza2 the {@code Pizza} object to assign as the second pizza
+     * 
+     * @param pizza2 the second Pizza object
      */
     public void setPizza2(Pizza pizza2) {
         this.pizza2 = pizza2;
@@ -57,16 +62,16 @@ public class PizzaOrder {
 
     /**
      * Sets the third pizza in the order.
-     *
-     * @param pizza3 the {@code Pizza} object to assign as the third pizza
+     * 
+     * @param pizza3 the third Pizza object
      */
     public void setPizza3(Pizza pizza3) {
         this.pizza3 = pizza3;
     }
 
     /**
-     * Calculates the total cost of the pizza order based on the pizzas added.
-     *
+     * Calculates the total cost of the pizza order based on the individual pizza costs.
+     * 
      * @return the total cost of the order
      */
     public double calcTotal() {
@@ -84,5 +89,5 @@ public class PizzaOrder {
 
         return total;
     }
-}
+} 
 
